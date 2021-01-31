@@ -1,8 +1,8 @@
 public class Ship_Boosters extends Item{
     private boolean isWeared;
 
-    public Ship_Boosters(String name){
-       super(name);
+    public Ship_Boosters(String name, String color, int hp ){
+       super(name, color, hp);
         this.isWeared=false;
     }
 

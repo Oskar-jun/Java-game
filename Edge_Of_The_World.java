@@ -1,8 +1,6 @@
-class Edge_Of_The_World  {
-    public String name;
+class Edge_Of_The_World extends Object  {
 
-    public Edge_Of_The_World (String name){
-        this.name = name;
+    public Edge_Of_The_World () {
     }
-
+    // simple class of ending the game, has no attributes.
 }

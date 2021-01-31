@@ -16,7 +16,7 @@ public class Humanoid extends Object{
     }
 
     public void healthincrease(int amount){
-        if ((100)>(this.health+amount)){
+        if ((100)<(this.health+amount)){
             this.health+=amount;
             System.out.println ("Current health is "+ this.health);
         }else{
@@ -24,7 +24,7 @@ public class Humanoid extends Object{
         }
     }
 
-    public void takeDamage(int amount){
+    public void takeDamage(int amount){   
         if ((this.health-amount)>0){
             this.health-=amount;
             System.out.println (this.name +" took damage of "+ amount + " hit points ");
@@ -42,11 +42,6 @@ public class Humanoid extends Object{
         }
         return false;
     }
-
-
-
-
-
 
 
     public int getPosition(){
