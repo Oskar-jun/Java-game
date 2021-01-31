@@ -1,6 +1,7 @@
-class Edge_Of_The_World extends Object  {
+class Edge_Of_The_World extends Object {
 
-    public Edge_Of_The_World () {
+    public Edge_Of_The_World( ) {
     }
-    // simple class of ending the game, has no attributes.
+    // simple class of ending the game, has no attributes. Has very very weird constructor
+
 }

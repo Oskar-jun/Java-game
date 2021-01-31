@@ -1,13 +1,21 @@
-public class Player extends Humanoid{
+public class Player extends keyCharacters {
 
-    private final Ship_Boosters[] weared = new Ship_Boosters[3];
+    private final Item[] weared = new Item[ 3 ];
 
-    public Player(String name){
-        super (name);
+    public void wear( Item foundItem ) {
+        for (int i = 0; i < this.weared.length; i++)
+            if ( this.weared[ i ] == null ) {
+                this.weared[ i ] = foundItem;
+                i = this.weared.length;
+            }
     }
 
-    public Ship_Boosters[] getWeared( Ship_Boosters[] weared )
-     {return weared;}
+    public Item[] wear( ) {
+        System.out.println( " Player boosted his ship by " );
+        return weared;
+    }
 
-//     public
+    public Player( String name ) {
+        super( name );
+    }
 }
