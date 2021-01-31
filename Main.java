@@ -28,8 +28,8 @@ public class Main {
                     System.out.print( ANSI_PURPLE + "\uD83D\uDEA3\u200D" + ANSI_RESET );
                 } else if ( worldLayer[ j ] instanceof Enemy ) {
                     if ( ( ( Enemy ) worldLayer[ j ] ).getName( ).equals( "Ugly Kraken, fear of depth" ) ) {  /* different Icons for
-                                                                                                    the different enemies. Literally doing same,
-                                                                                                    but more interesting :) */
+                                                                                                                 the different enemies. Literally doing same,
+                                                                                                                 but more interesting :) */
                         System.out.print( ANSI_RED + "\uD83E\uDD91" + ANSI_RESET );
                     } else if ( ( ( Enemy ) worldLayer[ j ] ).getName( ).equals( "Pirates of the Caribbean" ) )
                         System.out.print( ANSI_RED + "☠ " + ANSI_RESET );
@@ -58,15 +58,18 @@ public class Main {
         String interact = scanner.nextLine( );
         switch ( interact ) {
             case ( "E" ), ( "e" ) -> {
-                if ( currentPlayer.takeItem( foundItem ) ) {
-                    currentPlayer.wear( foundItem );                                           // Непонятная хрень, доделать
-                    switch ( foundItem.getName( ) ) {
-                        case "Super durable sail fabric" -> currentPlayer.healthincrease( 10 );
-                        case "Stern from hardened wood" -> currentPlayer.healthincrease( 25 );
-                        case "Heat-resistant ship bow" -> currentPlayer.healthincrease( 50 );
-                    }
-                    world_level[ currentPlayer.getPosition( ) ] = null;
+                if ( currentPlayer.takeItem( foundItem )) {
+                    currentPlayer.wear( foundItem );
+                    if (foundItem.getName().equals( "Super durable sail fabric" )) {
+                        currentPlayer.takenDamage    ( -10 );                                           // by negative numbers we add hp to ship
+                    } else if (foundItem.getName().equals( "Stern from hardened wood" )) {
+                        currentPlayer.takenDamage    ( -25 );
+                    } else currentPlayer.takenDamage ( -50 );
                 }
+                checkItem( world_level, foundItem );
+                System.out.println("Total health now is " + ANSI_RED
+                        +  currentPlayer.getHealth() + ANSI_PURPLE);
+                world_level[ currentPlayer.getPosition( ) ] = null;
             }
         }
     }
@@ -100,7 +103,7 @@ public class Main {
         for (int i = 0; i < 780; i++) {
 
             if ( ( int ) ( Math.random( ) + itemSpawnChance ) >= 1 ) {
-                world[ i ] = new Ship_Boosters( ANSI_CYAN + "Super durable sail fabric", " " + ANSI_RESET, 10 );   /* 3 intuitive levels of items, blue - ordinary, purple - epic and yellow - legendary.
+                world[ i ] = new Ship_Boosters( ANSI_CYAN + "Super durable sail fabric",10 );   /* 3 intuitive levels of items, blue - ordinary, purple - epic and yellow - legendary.
                                                                                                                             At least at that point of time I expect myself to give some HP upgrade according to the class of item.
                                                                                                                             Change of the color of Upper "Edge of the world" portals was "Bug" but I decided to make it as a feature:
                                                                                                                             If world is flat, so upper portals are like generating the treasure chests for the other world, being linked
@@ -111,13 +114,13 @@ public class Main {
             } else {
                 itemSpawnChance += 0.000961;
                 if ( ( int ) ( Math.random( ) + itemSpawnChance ) >= 1 ) {
-                    world[ i ] = new Ship_Boosters( ANSI_PURPLE + "Stern from hardened wood", " " + ANSI_RESET, 25 ); // I know that it`s not the best way but I found no other option to reset the color.
+                    world[ i ] = new Ship_Boosters( ANSI_PURPLE + "Stern from hardened wood",25 ); // I know that it`s not the best way but I found no other option to reset the color.
 
                     itemSpawnChance = 0.0;
                 } else {
                     itemSpawnChance += 0.05961;
                     if ( ( int ) ( Math.random( ) + itemSpawnChance ) >= 1 ) {
-                        world[ i ] = new Ship_Boosters( ANSI_YELLOW + "Heat-resistant ship bow", " " + ANSI_RESET, 50 );
+                        world[ i ] = new Ship_Boosters( ANSI_YELLOW + "Heat-resistant ship bow",50 );
 
                         itemSpawnChance = 0.0;
                     } else {
@@ -150,7 +153,6 @@ public class Main {
         return world;
     }
 
-
     public static void fight( Player currentPlayer, Enemy currentEnemy, Object[] world_level ) {
         while ( ( !currentEnemy.checkIfDead( ) ) && ( !currentPlayer.checkIfDead( ) ) ) {
             switch ( ( int ) ( Math.random( ) * 6 ) ) {
@@ -172,6 +174,12 @@ public class Main {
         if ( currentEnemy.checkIfDead( ) ) world_level[ currentPlayer.getPosition( ) ] = null;
     }
 
+   public static void  checkItem (  Object[] world_level ,Item foundItem ) {
+        for ( int i = 0; i < 780; i++ ) {
+            if ( ( world_level[i] instanceof Item ) && ( ( Item ) world_level[i] ).getName( ).equals( foundItem.getName( ) ) )
+                world_level[i] = null;
+        }
+    }
 
     public static void main( String[] args ) {
         Player player_Alex = new Player( "Alex" );
@@ -193,6 +201,10 @@ public class Main {
                 case ( "Q" ), ( "q" ) -> moveMain( player_Alex, -20, world_level, player_level );
             }
         }
+
+
+
+
         System.out.println( "\n" + ANSI_RED + " Game over. " );
 
         // 1 Complete Edge of the world             }} Done

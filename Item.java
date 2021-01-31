@@ -1,10 +1,9 @@
 public class Item extends Object {
-    private final String name, color;
+    private final String name;
     private final int hp;
 
-    public Item( String name, String color, int hp ) {
+    public Item( String name, int hp ) {
         this.name = name;
-        this.color = color;
         this.hp = hp;
 
     }

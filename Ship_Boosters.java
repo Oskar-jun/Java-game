@@ -1,8 +1,8 @@
 public class Ship_Boosters extends Item {
 
 
-    public Ship_Boosters(String name, String color, int hp) {
-        super( name, color, hp);
+    public Ship_Boosters(String name, int hp) {
+        super( name, hp);
 
     }
 
